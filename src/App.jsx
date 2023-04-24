@@ -1,35 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home/Home";
+import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
+import Customers from "./pages/Customers/Customers";
+import Products from "./pages/Products/Products";
+import Profile from "./pages/Profile/Profile";
+import MyOrders from "./pages/Orders/MyOrders";
+import Pending from "./pages/Orders/Pending";
+import InProcess from "./pages/Orders/inProcess";
+import OrdersLayout from "./components/OrdersLayout";
+import Layout from "./components/Layout";
+import UserContextProvider from "./context/userContext";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <UserContextProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="customers" element={<Customers />} />
+            <Route path="products" element={<Products />} />
+
+            <Route path="orders" element={<OrdersLayout />}>
+              <Route path="pending/:sector" element={<Pending />} />
+              <Route path="in-process" element={<InProcess />} />
+              <Route path="technical/:codeTechnical" element={<MyOrders />} />
+            </Route>
+
+            <Route path="/profile" element={<Profile />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </UserContextProvider>
+  );
 }
 
-export default App
+export default App;
