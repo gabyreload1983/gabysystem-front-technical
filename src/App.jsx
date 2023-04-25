@@ -11,7 +11,7 @@ import InProcess from "./pages/Orders/inProcess";
 import OrdersLayout from "./components/OrdersLayout";
 import Layout from "./components/Layout";
 import UserContextProvider from "./context/userContext";
-import OrderDetail from "./pages/Orders/OrderDetail";
+import OrderDetail from "./pages/Orders/OrderDetail/OrderDetail";
 
 function App() {
   return (

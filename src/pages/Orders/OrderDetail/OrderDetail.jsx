@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, ButtonGroup, Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { callApi } from "./utils";
+import { callApi } from "../utils";
 import ProductsInOrder from "./ProductsInOrder";
+import { UserContext } from "../../../context/userContext";
 
 export default function OrderDetail() {
+  const { user } = useContext(UserContext);
   const { id } = useParams();
   const [order, setOrder] = useState(null);
 
@@ -49,16 +51,20 @@ export default function OrderDetail() {
           </Row>
           <Row>
             <Col>
-              <ButtonGroup aria-label="Basic example">
-                <Button variant="primary">Reparado</Button>
-                <Button variant="danger">Sin Reparacion</Button>
-              </ButtonGroup>
+              {order.estado === 22 && order.tecnico === user.code_technical && (
+                <ButtonGroup aria-label="Basic example">
+                  <Button variant="primary">Reparado</Button>
+                  <Button variant="danger">Sin Reparacion</Button>
+                  <Button variant="info">Guardar</Button>
+                </ButtonGroup>
+              )}
             </Col>
             <Col className="text-end">
-              <ButtonGroup aria-label="Basic example">
-                <Button variant="warning">Liberar</Button>
-                <Button variant="info">Guardar</Button>
-              </ButtonGroup>
+              {order.estado === 22 && (
+                <ButtonGroup aria-label="Basic example">
+                  <Button variant="warning">Liberar</Button>
+                </ButtonGroup>
+              )}
             </Col>
           </Row>
         </Container>
