@@ -11,6 +11,7 @@ import InProcess from "./pages/Orders/inProcess";
 import OrdersLayout from "./components/OrdersLayout";
 import Layout from "./components/Layout";
 import UserContextProvider from "./context/userContext";
+import OrderDetail from "./pages/Orders/OrderDetail";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
               <Route path="pending/:sector" element={<Pending />} />
               <Route path="in-process" element={<InProcess />} />
               <Route path="technical/:codeTechnical" element={<MyOrders />} />
+              <Route path=":id" element={<OrderDetail />} />
             </Route>
 
             <Route path="/profile" element={<Profile />} />
