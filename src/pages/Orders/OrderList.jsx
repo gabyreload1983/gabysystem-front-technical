@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export default function OrderList({ orders }) {
@@ -36,13 +36,12 @@ export default function OrderList({ orders }) {
                   <td>{order.prioridad}</td>
                   <td>
                     {order.estado === 21 && (
-                      <Link
-                        className="btn btn-outline-info"
+                      <Button
+                        variant="outline-success"
                         onClick={() => takeOrder(order.nrocompro)}
-                        to={`/orders/${order.nrocompro}`}
                       >
                         TOMAR
-                      </Link>
+                      </Button>
                     )}
                   </td>
                 </tr>
