@@ -12,7 +12,10 @@ export default function OrderList({ orders, onTakeOrder }) {
             <th>NRO ORDEN</th>
             <th>CLIENTE</th>
             <th>TIER</th>
-            <th></th>
+            <th>
+              {" "}
+              {orders.length > 0 && orders[0].estado === 22 && "TECNICO"}
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -40,6 +43,7 @@ export default function OrderList({ orders, onTakeOrder }) {
                         TOMAR
                       </Button>
                     )}
+                    {order.estado === 22 && order.tecnico}
                   </td>
                 </tr>
               );
