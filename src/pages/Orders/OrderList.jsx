@@ -2,10 +2,7 @@ import React from "react";
 import { Button, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-export default function OrderList({ orders }) {
-  const takeOrder = async (nrocompro) => {
-    console.log(nrocompro);
-  };
+export default function OrderList({ orders, onTakeOrder }) {
   return (
     <>
       <Table striped bordered hover size="sm">
@@ -38,7 +35,7 @@ export default function OrderList({ orders }) {
                     {order.estado === 21 && (
                       <Button
                         variant="outline-success"
-                        onClick={() => takeOrder(order.nrocompro)}
+                        onClick={() => onTakeOrder(order.nrocompro)}
                       >
                         TOMAR
                       </Button>
