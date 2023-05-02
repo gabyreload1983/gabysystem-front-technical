@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import OrderList from "./OrderList";
-import { getFromApi } from "../../utils";
+import { getFromApi, putFromApi } from "../../utils";
 import Swal from "sweetalert2";
 import { UserContext } from "../../context/userContext";
 
@@ -26,26 +26,19 @@ export default function Pending() {
         confirmButtonText: "Aceptar",
       });
       if (!response.isConfirmed) return;
-      const data = await fetch(
+      const data = await putFromApi(
         `${import.meta.env.VITE_PREFIX_API}/orders/take`,
         {
-          method: "PUT",
-          body: JSON.stringify({
-            nrocompro: `${nrocompro}`,
-            code_technical: `${user.code_technical}`,
-          }),
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-          },
+          nrocompro: `${nrocompro}`,
+          code_technical: `${user.code_technical}`,
         }
       );
-      const json = await data.json();
-      if (json.status === "error")
+      if (data.status === "error")
         return Swal.fire({
-          text: `${json.message}`,
+          text: `${data.message}`,
           icon: "error",
         });
-      if (json.status === "success") {
+      if (data.status === "success") {
         await getOrders();
 
         await Swal.fire({
