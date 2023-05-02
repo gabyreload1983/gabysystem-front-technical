@@ -36,7 +36,7 @@ export default function ProductsInOrder({
               <td className="custom-td text-end">
                 <InputGroup>
                   <InputGroup.Text>$</InputGroup.Text>
-                  <InputGroup.Text>${p.lista1}</InputGroup.Text>
+                  <InputGroup.Text>${p.priceWithTax}</InputGroup.Text>
                 </InputGroup>
               </td>
             </tr>
@@ -49,7 +49,7 @@ export default function ProductsInOrder({
           <td className="custom-td text-end">
             <InputGroup>
               <InputGroup.Text>$</InputGroup.Text>
-              <InputGroup.Text>{total}</InputGroup.Text>
+              <InputGroup.Text>{total.toFixed(2)}</InputGroup.Text>
             </InputGroup>
           </td>
         </tr>

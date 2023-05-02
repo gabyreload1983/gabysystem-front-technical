@@ -35,10 +35,10 @@ export default function OrderDetail() {
       `${import.meta.env.VITE_PREFIX_API}/orders/${id}`
     );
     if (response) {
-      setOrder(response[0]);
-      setDiagnosis(response[0].diagnostico);
-      setPrice(Number(response[0].costo));
-      setTotal(Number(response[0].total));
+      setOrder(response);
+      setDiagnosis(response.diagnostico);
+      setPrice(Number(response.costo));
+      setTotal(Number(response.total));
     }
   };
 
@@ -48,7 +48,6 @@ export default function OrderDetail() {
 
   const handlePrice = (e) => {
     setTotal((prevTotal) => {
-      console.log(prevTotal, price, Number(e.target.value));
       return prevTotal - price + Number(e.target.value);
     });
     setPrice(Number(e.target.value));
