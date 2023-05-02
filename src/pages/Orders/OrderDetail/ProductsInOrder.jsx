@@ -1,7 +1,12 @@
 import React from "react";
-import { InputGroup, Table } from "react-bootstrap";
+import { Form, InputGroup, Table } from "react-bootstrap";
 
-export default function ProductsInOrder({ order }) {
+export default function ProductsInOrder({
+  order,
+  total,
+  price,
+  onHandlePrice,
+}) {
   return (
     <Table striped bordered hover>
       <thead>
@@ -18,7 +23,7 @@ export default function ProductsInOrder({ order }) {
           <td className="custom-td text-end">
             <InputGroup>
               <InputGroup.Text>$</InputGroup.Text>
-              <InputGroup.Text>{order.costo}</InputGroup.Text>
+              <Form.Control value={price} onChange={onHandlePrice} />
             </InputGroup>
           </td>
         </tr>
@@ -44,7 +49,7 @@ export default function ProductsInOrder({ order }) {
           <td className="custom-td text-end">
             <InputGroup>
               <InputGroup.Text>$</InputGroup.Text>
-              <InputGroup.Text>1000</InputGroup.Text>
+              <InputGroup.Text>{total}</InputGroup.Text>
             </InputGroup>
           </td>
         </tr>
