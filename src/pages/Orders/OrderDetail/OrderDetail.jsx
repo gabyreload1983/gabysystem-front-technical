@@ -133,11 +133,12 @@ export default function OrderDetail() {
                 )}
             </Col>
             <Col className="text-end">
-              {order.estado === 22 && (
-                <ButtonGroup aria-label="Basic example">
-                  <Button variant="warning">Liberar</Button>
-                </ButtonGroup>
-              )}
+              {order.estado === 22 &&
+                order.tecnico === user?.code_technical && (
+                  <ButtonGroup aria-label="Basic example">
+                    <Button variant="warning">Liberar</Button>
+                  </ButtonGroup>
+                )}
               {order.estado === 21 && (
                 <ButtonGroup aria-label="Basic example">
                   <Button variant="outline-success">Tomar</Button>
