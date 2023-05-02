@@ -1,18 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, ButtonGroup, Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { callApi } from "../utils";
 import ProductsInOrder from "./ProductsInOrder";
 import { UserContext } from "../../../context/userContext";
 import { useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
+import { getFromApi } from "../../../utils";
 
 export default function OrderDetail() {
   const { user } = useContext(UserContext);
   const { id } = useParams();
   const [order, setOrder] = useState(null);
-
-  console.log(order);
 
   const navigate = useNavigate();
 
@@ -21,7 +19,9 @@ export default function OrderDetail() {
   };
 
   const getOrders = async () => {
-    const response = await callApi(id);
+    const response = await getFromApi(
+      `${import.meta.env.VITE_PREFIX_API}/orders/${id}`
+    );
     if (response) setOrder(response[0]);
   };
 

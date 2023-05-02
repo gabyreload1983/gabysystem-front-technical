@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import OrderList from "./OrderList";
-import { callApi } from "./utils";
+import { getFromApi } from "../../utils";
 
 export default function Pending() {
   const { sector } = useParams();
   const [pendings, setPendings] = useState([]);
 
   const getOrders = async () => {
-    const response = await callApi(`pending/${sector}`);
+    const response = await getFromApi(
+      `${import.meta.env.VITE_PREFIX_API}/orders/pending/${sector}`
+    );
     if (response) setPendings(response);
   };
 

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import OrderList from "./OrderList";
-import { callApi } from "./utils";
+import { getFromApi } from "../../utils";
 
 export default function InProcess() {
   const [inProcess, setInProcess] = useState([]);
 
   const getOrders = async () => {
-    const response = await callApi("in-process");
+    const response = await getFromApi(
+      `${import.meta.env.VITE_PREFIX_API}/orders/in-process`
+    );
     if (response) setInProcess(response);
   };
 

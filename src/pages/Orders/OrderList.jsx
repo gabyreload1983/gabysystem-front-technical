@@ -19,7 +19,7 @@ export default function OrderList({ orders }) {
           </tr>
         </thead>
         <tbody>
-          {orders &&
+          {orders.length > 0 &&
             orders.map((order) => {
               return (
                 <tr key={`${order.nrocompro}`}>
