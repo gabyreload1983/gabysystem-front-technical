@@ -101,6 +101,64 @@ export default function OrderDetail() {
     }
   };
 
+  const closeOrder = async (diag) => {
+    try {
+      const orderToClose = {
+        nrocompro: order.nrocompro,
+        diagnostico: diagnosis,
+        costo: price,
+        code_technical: user.code_technical,
+        diag,
+      };
+      const response = await Swal.fire({
+        text: `Cerrar orden ${order.nrocompro}?`,
+        showCancelButton: true,
+        confirmButtonText: "Aceptar",
+      });
+      if (!response.isConfirmed) return;
+
+      const notification = await Swal.fire({
+        text: `Enviar notificacion por email?`,
+        showCancelButton: true,
+        confirmButtonText: "Aceptar",
+      });
+      if (notification.isConfirmed) orderToClose.notification = true;
+
+      const data = await putFromApi(
+        `${import.meta.env.VITE_PREFIX_API}/orders/close`,
+        orderToClose
+      );
+
+      if (data.status === "error")
+        return Swal.fire({
+          text: `${json.message}`,
+          icon: "error",
+        });
+      if (data.status === "success") {
+        await getOrders();
+
+        await Swal.fire({
+          toast: true,
+          icon: "success",
+          text: "Orden Cerrada exitosamente",
+          position: "top-end",
+          timer: 3000,
+          showConfirmButton: false,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        text: `${error.message}`,
+        icon: "error",
+      });
+    }
+  };
+
   useEffect(() => {
     getOrders();
   }, [id]);
@@ -215,8 +273,12 @@ export default function OrderDetail() {
               {order.estado === 22 &&
                 order.tecnico === user?.code_technical && (
                   <ButtonGroup aria-label="Basic example">
-                    <Button variant="primary">Reparado</Button>
-                    <Button variant="danger">Sin Reparacion</Button>
+                    <Button variant="primary" onClick={() => closeOrder(22)}>
+                      Reparado
+                    </Button>
+                    <Button variant="danger" onClick={() => closeOrder(23)}>
+                      Sin Reparacion
+                    </Button>
                     <Button variant="info" onClick={updateOrder}>
                       Guardar
                     </Button>
