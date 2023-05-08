@@ -3,6 +3,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { UserContext } from "../../context/userContext";
+import { postToApi } from "../../utils";
 
 export default function Login() {
   const [loginUser, setLoginUser] = useState({
@@ -21,22 +22,17 @@ export default function Login() {
   };
 
   const login = async () => {
-    const response = await fetch("http://localhost:8080/api/users/login", {
-      method: "POST",
-      body: JSON.stringify(loginUser),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const json = await response.json();
-    if (json.status === "success") {
-      const { accessToken } = json;
+    const response = await postToApi(
+      `${import.meta.env.VITE_PREFIX_API}/users/login`,
+      loginUser
+    );
+    if (response.status === "success") {
+      const { accessToken } = response;
 
       if (accessToken) {
-        sessionStorage.setItem("accessToken", accessToken);
-        console.log(json.user);
-        setUser(json.user);
-        // window.location.replace("/");
+        localStorage.setItem("accessToken", accessToken);
+
+        setUser(response.user);
       }
     }
   };
