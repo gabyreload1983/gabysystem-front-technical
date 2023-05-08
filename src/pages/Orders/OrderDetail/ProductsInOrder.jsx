@@ -21,10 +21,17 @@ export default function ProductsInOrder({
           <td>.ST</td>
           <td>Mano de Obra</td>
           <td className="custom-td text-end">
-            <InputGroup>
-              <InputGroup.Text>$</InputGroup.Text>
-              <Form.Control value={price} onChange={onHandlePrice} />
-            </InputGroup>
+            {order.estado === 22 ? (
+              <InputGroup>
+                <InputGroup.Text>$</InputGroup.Text>
+                <Form.Control value={price} onChange={onHandlePrice} />
+              </InputGroup>
+            ) : (
+              <InputGroup>
+                <InputGroup.Text>$</InputGroup.Text>
+                <InputGroup.Text>{price}</InputGroup.Text>
+              </InputGroup>
+            )}
           </td>
         </tr>
         {order.products.map((p, index) => {
