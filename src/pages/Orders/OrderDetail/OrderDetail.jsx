@@ -159,6 +159,54 @@ export default function OrderDetail() {
     }
   };
 
+  const freeOrder = async () => {
+    try {
+      const orderToFree = {
+        nrocompro: order.nrocompro,
+        code_technical: user.code_technical,
+      };
+      const response = await Swal.fire({
+        text: `Liberar orden ${order.nrocompro}?`,
+        showCancelButton: true,
+        confirmButtonText: "Aceptar",
+      });
+      if (!response.isConfirmed) return;
+
+      const data = await putFromApi(
+        `${import.meta.env.VITE_PREFIX_API}/orders/free`,
+        orderToFree
+      );
+
+      if (data.status === "error")
+        return Swal.fire({
+          text: `${json.message}`,
+          icon: "error",
+        });
+      if (data.status === "success") {
+        await getOrders();
+
+        await Swal.fire({
+          toast: true,
+          icon: "success",
+          text: "Orden Liberada exitosamente",
+          position: "top-end",
+          timer: 3000,
+          showConfirmButton: false,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        text: `${error.message}`,
+        icon: "error",
+      });
+    }
+  };
+
   useEffect(() => {
     getOrders();
   }, [id]);
@@ -289,7 +337,9 @@ export default function OrderDetail() {
               {order.estado === 22 &&
                 order.tecnico === user?.code_technical && (
                   <ButtonGroup aria-label="Basic example">
-                    <Button variant="warning">Liberar</Button>
+                    <Button variant="warning" onClick={freeOrder}>
+                      Liberar
+                    </Button>
                   </ButtonGroup>
                 )}
               {order.estado === 21 && (
