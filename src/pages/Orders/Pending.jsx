@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import OrderList from "./OrderList";
-import { getFromApi, putFromApi } from "../../utils";
+import { getFromApi, putToApi } from "../../utils";
 import Swal from "sweetalert2";
 import { UserContext } from "../../context/userContext";
 
@@ -26,7 +26,7 @@ export default function Pending() {
         confirmButtonText: "Aceptar",
       });
       if (!response.isConfirmed) return;
-      const data = await putFromApi(
+      const data = await putToApi(
         `${import.meta.env.VITE_PREFIX_API}/orders/take`,
         {
           nrocompro: `${nrocompro}`,

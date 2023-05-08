@@ -11,7 +11,7 @@ export const getFromApi = async (path) => {
   return false;
 };
 
-export const putFromApi = async (path, body) => {
+export const putToApi = async (path, body) => {
   const response = await fetch(path, {
     method: "PUT",
     body: JSON.stringify(body),

@@ -13,7 +13,7 @@ import ProductsInOrder from "./ProductsInOrder";
 import { UserContext } from "../../../context/userContext";
 import { useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
-import { getFromApi, putFromApi } from "../../../utils";
+import { getFromApi, putToApi } from "../../../utils";
 import Swal from "sweetalert2";
 
 export default function OrderDetail() {
@@ -61,7 +61,7 @@ export default function OrderDetail() {
         confirmButtonText: "Aceptar",
       });
       if (!response.isConfirmed) return;
-      const data = await putFromApi(
+      const data = await putToApi(
         `${import.meta.env.VITE_PREFIX_API}/orders/update`,
         {
           nrocompro: `${order.nrocompro}`,
@@ -124,7 +124,7 @@ export default function OrderDetail() {
       });
       if (notification.isConfirmed) orderToClose.notification = true;
 
-      const data = await putFromApi(
+      const data = await putToApi(
         `${import.meta.env.VITE_PREFIX_API}/orders/close`,
         orderToClose
       );
@@ -172,7 +172,7 @@ export default function OrderDetail() {
       });
       if (!response.isConfirmed) return;
 
-      const data = await putFromApi(
+      const data = await putToApi(
         `${import.meta.env.VITE_PREFIX_API}/orders/free`,
         orderToFree
       );
@@ -215,7 +215,7 @@ export default function OrderDetail() {
         confirmButtonText: "Aceptar",
       });
       if (!response.isConfirmed) return;
-      const data = await putFromApi(
+      const data = await putToApi(
         `${import.meta.env.VITE_PREFIX_API}/orders/take`,
         {
           nrocompro: `${order.nrocompro}`,
