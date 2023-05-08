@@ -5,10 +5,7 @@ export const getFromApi = async (path) => {
       "Content-Type": "application/json",
     },
   });
-  if (response.status === 200) {
-    return await response.json();
-  }
-  return false;
+  return await response.json();
 };
 
 export const putToApi = async (path, body) => {
@@ -19,10 +16,7 @@ export const putToApi = async (path, body) => {
       "Content-Type": "application/json",
     },
   });
-  if (response.status === 200) {
-    return await response.json();
-  }
-  return false;
+  return await response.json();
 };
 
 export const postToApi = async (path, body) => {
@@ -33,8 +27,5 @@ export const postToApi = async (path, body) => {
       "Content-Type": "application/json",
     },
   });
-  if (response.status === 200) {
-    return await response.json();
-  }
-  return false;
+  return await response.json();
 };
