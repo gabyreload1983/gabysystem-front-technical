@@ -30,7 +30,7 @@ export default function OrderDetail() {
     navigate(-1);
   };
 
-  const getOrders = async () => {
+  const getOrder = async () => {
     const response = await getFromApi(
       `${import.meta.env.VITE_PREFIX_API}/orders/${id}`
     );
@@ -77,7 +77,7 @@ export default function OrderDetail() {
           icon: "error",
         });
       if (data.status === "success") {
-        await getOrders();
+        await getOrder();
 
         await Swal.fire({
           toast: true,
@@ -135,7 +135,7 @@ export default function OrderDetail() {
           icon: "error",
         });
       if (data.status === "success") {
-        await getOrders();
+        await getOrder();
 
         await Swal.fire({
           toast: true,
@@ -183,7 +183,7 @@ export default function OrderDetail() {
           icon: "error",
         });
       if (data.status === "success") {
-        await getOrders();
+        await getOrder();
 
         await Swal.fire({
           toast: true,
@@ -207,8 +207,53 @@ export default function OrderDetail() {
     }
   };
 
+  const takeOrder = async () => {
+    try {
+      const response = await Swal.fire({
+        text: `Queres tomar la orden ${order.nrocompro}?`,
+        showCancelButton: true,
+        confirmButtonText: "Aceptar",
+      });
+      if (!response.isConfirmed) return;
+      const data = await putFromApi(
+        `${import.meta.env.VITE_PREFIX_API}/orders/take`,
+        {
+          nrocompro: `${order.nrocompro}`,
+          code_technical: `${user.code_technical}`,
+        }
+      );
+      if (data.status === "error")
+        return Swal.fire({
+          text: `${data.message}`,
+          icon: "error",
+        });
+      if (data.status === "success") {
+        await getOrder();
+
+        await Swal.fire({
+          toast: true,
+          icon: "success",
+          text: "Orden tomada",
+          position: "top-end",
+          timer: 3000,
+          showConfirmButton: false,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        text: `${error.message}`,
+        icon: "error",
+      });
+    }
+  };
+
   useEffect(() => {
-    getOrders();
+    getOrder();
   }, [id]);
 
   return (
@@ -344,7 +389,9 @@ export default function OrderDetail() {
                 )}
               {order.estado === 21 && (
                 <ButtonGroup aria-label="Basic example">
-                  <Button variant="outline-success">Tomar</Button>
+                  <Button variant="outline-success" onClick={takeOrder}>
+                    Tomar
+                  </Button>
                 </ButtonGroup>
               )}
             </Col>
