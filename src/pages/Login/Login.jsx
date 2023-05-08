@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { UserContext } from "../../context/userContext";
 import { postToApi } from "../../utils";
+import Swal from "sweetalert2";
 
 export default function Login() {
   const [loginUser, setLoginUser] = useState({
@@ -26,6 +27,11 @@ export default function Login() {
       `${import.meta.env.VITE_PREFIX_API}/users/login`,
       loginUser
     );
+    if (response.status === "error")
+      return Swal.fire({
+        text: `${response.message}`,
+        icon: "error",
+      });
     if (response.status === "success") {
       const { accessToken } = response;
 
@@ -33,6 +39,20 @@ export default function Login() {
         localStorage.setItem("accessToken", accessToken);
 
         setUser(response.user);
+
+        await Swal.fire({
+          toast: true,
+          icon: "success",
+          text: "Login success",
+          position: "top-end",
+          timer: 3000,
+          showConfirmButton: false,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
       }
     }
   };
