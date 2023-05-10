@@ -120,7 +120,10 @@ export default function OrderDetail() {
       const notification = await Swal.fire({
         text: `Enviar notificacion por email?`,
         showCancelButton: true,
-        confirmButtonText: "Aceptar",
+        cancelButtonText: "Cerrar Sin Notificacion",
+        confirmButtonText: "Cerrar y Enviar Email",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
       });
       if (notification.isConfirmed) orderToClose.notification = true;
 
