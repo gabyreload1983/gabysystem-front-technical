@@ -25,7 +25,7 @@ export default function OrdersLayout() {
               </Nav.Link>
               <Nav.Link
                 as={NavLink}
-                to={`/orders/technical/${user ? user.code_technical : "NOT"}`}
+                to={`/orders/technical/${user?.code_technical}`}
               >
                 Mis Ordenes
               </Nav.Link>
