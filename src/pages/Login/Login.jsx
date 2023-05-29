@@ -63,8 +63,9 @@ export default function Login() {
   };
   return (
     <Container>
-      <Row className="justify-content-center">
+      <Row className="justify-content-center mt-3">
         <Col sm={12} md={6} lg={4}>
+          <h1 className="text-center">LOGIN</h1>
           <Form>
             <Form.Group className="mb-3" controlId="email">
               <Form.Label>Email</Form.Label>
