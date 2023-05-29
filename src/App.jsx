@@ -12,6 +12,7 @@ import OrdersLayout from "./components/OrdersLayout";
 import Layout from "./components/Layout";
 import UserContextProvider from "./context/userContext";
 import OrderDetail from "./pages/Orders/OrderDetail/OrderDetail";
+import PageNotFount from "./components/PageNotFount";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="customers" element={<Customers />} />
             <Route path="products" element={<Products />} />
+            <Route path="/profile" element={<Profile />} />
 
             <Route path="orders" element={<OrdersLayout />}>
               <Route path="pending/:sector" element={<Pending />} />
@@ -32,7 +34,7 @@ function App() {
               <Route path=":id" element={<OrderDetail />} />
             </Route>
 
-            <Route path="/profile" element={<Profile />} />
+            <Route path="*" element={<PageNotFount />} />
           </Route>
         </Routes>
       </BrowserRouter>
