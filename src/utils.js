@@ -3,6 +3,7 @@ export const getFromApi = async (path) => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
     },
   });
   return await response.json();
@@ -14,6 +15,7 @@ export const putToApi = async (path, body) => {
     body: JSON.stringify(body),
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
     },
   });
   return await response.json();
@@ -25,6 +27,7 @@ export const postToApi = async (path, body) => {
     body: JSON.stringify(body),
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
     },
   });
   return await response.json();
