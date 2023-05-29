@@ -1,15 +1,17 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 import { useContext } from "react";
 
 function NavBar() {
-  const { user } = useContext(UserContext);
+  const { user, logoutUserContext } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const logout = async () => {
-    console.log("logout");
+    await logoutUserContext();
+    navigate("/login");
   };
 
   return (

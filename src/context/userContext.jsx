@@ -7,7 +7,7 @@ const UserContextProvider = ({ children }) => {
 
   const logoutUserContext = () => {
     localStorage.removeItem("user");
-    localStorage.removeItem("token");
+    localStorage.removeItem("jwtToken");
     setUser(null);
   };
 
