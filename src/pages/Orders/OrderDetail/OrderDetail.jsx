@@ -73,7 +73,7 @@ export default function OrderDetail() {
 
       if (data.status === "error")
         return Swal.fire({
-          text: `${json.message}`,
+          text: `${data.message}`,
           icon: "error",
         });
       if (data.status === "success") {
@@ -134,7 +134,7 @@ export default function OrderDetail() {
 
       if (data.status === "error")
         return Swal.fire({
-          text: `${json.message}`,
+          text: `${data.message}`,
           icon: "error",
         });
       if (data.status === "success") {
@@ -182,7 +182,7 @@ export default function OrderDetail() {
 
       if (data.status === "error")
         return Swal.fire({
-          text: `${json.message}`,
+          text: `${data.message}`,
           icon: "error",
         });
       if (data.status === "success") {
