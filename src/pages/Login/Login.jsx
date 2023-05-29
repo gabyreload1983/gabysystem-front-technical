@@ -5,55 +5,60 @@ import Button from "react-bootstrap/Button";
 import { UserContext } from "../../context/userContext";
 import { postToApi } from "../../utils";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const [loginUser, setLoginUser] = useState({
+  const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState(false);
+  const [loginForm, setLoginForm] = useState({
     email: "",
     password: "",
   });
 
-  const { setUser } = useContext(UserContext);
+  const { loginUserContext } = useContext(UserContext);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setLoginUser((prevUser) => ({
+    setLoginForm((prevUser) => ({
       ...prevUser,
       [name]: value,
     }));
   };
 
   const login = async () => {
+    setIsLogin(true);
     const response = await postToApi(
       `${import.meta.env.VITE_PREFIX_API}/users/login`,
-      loginUser
+      loginForm
     );
-    if (response.status === "error")
+    if (response.status === "error") {
+      setIsLogin(false);
       return Swal.fire({
         text: `${response.message}`,
         icon: "error",
       });
+    }
     if (response.status === "success") {
-      const { accessToken } = response;
+      const { user, accessToken } = response;
 
-      if (accessToken) {
-        localStorage.setItem("accessToken", accessToken);
+      loginUserContext(user, accessToken);
 
-        setUser(response.user);
-
-        await Swal.fire({
-          toast: true,
-          icon: "success",
-          text: "Login success",
-          position: "top-end",
-          timer: 3000,
-          showConfirmButton: false,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-          },
-        });
-      }
+      await Swal.fire({
+        toast: true,
+        icon: "success",
+        text: "Login success",
+        position: "top-end",
+        timer: 1500,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+        didClose: () => {
+          navigate("/");
+        },
+      });
     }
   };
   return (
@@ -80,8 +85,8 @@ export default function Login() {
                 name="password"
               />
             </Form.Group>
-            <Button onClick={login} variant="primary">
-              Login
+            <Button onClick={login} variant="primary" disabled={isLogin}>
+              {isLogin ? "Wait..." : "Login"}
             </Button>
           </Form>
         </Col>
