@@ -34,11 +34,19 @@ export default function OrderDetail() {
     const response = await getFromApi(
       `${import.meta.env.VITE_PREFIX_API}/orders/${id}`
     );
-    if (response) {
-      setOrder(response);
-      setDiagnosis(response.diagnostico);
-      setPrice(Number(response.costo));
-      setTotal(Number(response.total));
+    if (response.status === "error") {
+      Swal.fire({
+        text: `${response.message}`,
+        icon: "error",
+      });
+    }
+
+    if (response.status === "success") {
+      const { order } = response;
+      setOrder(order);
+      setDiagnosis(order.diagnostico);
+      setPrice(Number(order.costo));
+      setTotal(Number(order.total));
     }
   };
 

@@ -4,6 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { NavLink, Outlet } from "react-router-dom";
 import { UserContext } from "../context/userContext";
+import SearchOrder from "./SearchOrder";
 
 export default function OrdersLayout() {
   const { user } = useContext(UserContext);
@@ -30,6 +31,7 @@ export default function OrdersLayout() {
                 Mis Ordenes
               </Nav.Link>
             </Nav>
+            <SearchOrder />
           </Navbar.Collapse>
         </Container>
       </Navbar>
