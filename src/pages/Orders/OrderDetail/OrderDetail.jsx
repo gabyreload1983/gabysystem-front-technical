@@ -353,6 +353,7 @@ export default function OrderDetail() {
                           aria-label="With textarea"
                           value={diagnosis}
                           onChange={handleDiagnosis}
+                          rows="5"
                         />
                       </InputGroup>
                     </td>
