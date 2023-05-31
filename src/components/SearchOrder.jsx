@@ -1,14 +1,27 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function SearchOrder() {
   const [orderInput, setOrderInput] = useState("");
   const navigate = useNavigate();
+  const warningSearchOrder = {
+    icon: "warning",
+    title: "Ingresa los ultimos 5 numeros de la orden",
+    toast: true,
+    position: "top",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+  };
 
   const searchOrder = async () => {
-    let orderPrefix = "ORX0011000";
-    const nrocompro = orderPrefix + orderInput;
-    navigate(`/orders/${nrocompro}`);
+    if (orderInput.length === 5) {
+      let orderPrefix = "ORX0011000";
+      const nrocompro = orderPrefix + orderInput;
+      navigate(`/orders/${nrocompro}`);
+    }
+    if (orderInput.length !== 5) await Swal.fire(warningSearchOrder);
   };
 
   const handleSearchChange = (event) => {
@@ -16,7 +29,7 @@ export default function SearchOrder() {
     setOrderInput(search);
   };
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = async (event) => {
     const keyCode = event.keyCode;
     if (keyCode === 13) searchOrder();
   };
