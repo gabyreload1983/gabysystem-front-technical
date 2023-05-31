@@ -15,6 +15,12 @@ export default function SearchOrder() {
     const search = event.target.value;
     setOrderInput(search);
   };
+
+  const handleKeyDown = (event) => {
+    const keyCode = event.keyCode;
+    if (keyCode === 13) searchOrder();
+  };
+
   return (
     <div className="d-flex">
       <input
@@ -23,6 +29,7 @@ export default function SearchOrder() {
         placeholder="Ultimos 5 numeros"
         onChange={handleSearchChange}
         name="search"
+        onKeyDown={handleKeyDown}
       />
       <button className="btn btn-outline-success" onClick={searchOrder}>
         Buscar
