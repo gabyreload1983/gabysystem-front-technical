@@ -8,7 +8,7 @@ export default function InProcess() {
 
   const getOrders = async () => {
     const response = await getFromApi(
-      `${import.meta.env.VITE_PREFIX_API}/orders/in-process`
+      `http://localhost:3400/api/orders/in-process`
     );
     if (response) setInProcess(response);
   };

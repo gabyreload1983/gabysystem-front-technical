@@ -24,7 +24,7 @@ export default function Register() {
 
   const register = async () => {
     const response = await postToApi(
-      `${import.meta.env.VITE_PREFIX_API}/users/register`,
+      `http://localhost:3400/api/users/register`,
       newUser
     );
     if (response.status === "error")
@@ -33,6 +33,15 @@ export default function Register() {
         icon: "error",
       });
     if (response.status === "success") {
+      const form = document.querySelector("#formRegister");
+      form.reset();
+      setNewUser({
+        first_name: "",
+        last_name: "",
+        email: "",
+        code_technical: "",
+        password: "",
+      });
       await Swal.fire({
         toast: true,
         icon: "success",
@@ -52,7 +61,7 @@ export default function Register() {
     <Container>
       <Row className="justify-content-center">
         <Col sm={12} md={6} lg={4}>
-          <Form>
+          <Form id="formRegister">
             <Form.Group className="mb-3" controlId="first_name">
               <Form.Label>Nombre</Form.Label>
               <Form.Control

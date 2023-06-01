@@ -10,7 +10,7 @@ export default function MyOrders() {
 
   const getOrders = async () => {
     const response = await getFromApi(
-      `${import.meta.env.VITE_PREFIX_API}/orders/technical/${codeTechnical}`
+      `http://localhost:3400/api/orders/technical/${codeTechnical}`
     );
     if (response) setMyOrders(response);
   };

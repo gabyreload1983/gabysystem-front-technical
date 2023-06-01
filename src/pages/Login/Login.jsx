@@ -25,10 +25,15 @@ export default function Login() {
     }));
   };
 
+  const handleKeyDown = async (event) => {
+    const keyCode = event.keyCode;
+    if (keyCode === 13) login();
+  };
+
   const login = async () => {
     setIsLogin(true);
     const response = await postToApi(
-      `${import.meta.env.VITE_PREFIX_API}/users/login`,
+      `http://localhost:3400/api/users/login`,
       loginForm
     );
     if (response.status === "error") {
@@ -66,7 +71,7 @@ export default function Login() {
       <Row className="justify-content-center mt-3">
         <Col sm={12} md={6} lg={4}>
           <h1 className="text-center">LOGIN</h1>
-          <Form>
+          <Form onKeyDown={handleKeyDown}>
             <Form.Group className="mb-3" controlId="email">
               <Form.Label>Email</Form.Label>
               <Form.Control
