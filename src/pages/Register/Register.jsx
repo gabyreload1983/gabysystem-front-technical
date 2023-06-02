@@ -24,7 +24,7 @@ export default function Register() {
 
   const register = async () => {
     const response = await postToApi(
-      `http://localhost:3400/api/users/register`,
+      `http://192.168.8.153:3400/api/users/register`,
       newUser
     );
     if (response.status === "error")

@@ -13,7 +13,7 @@ export default function Pending() {
 
   const getOrders = async () => {
     const response = await getFromApi(
-      `http://localhost:3400/api/orders/pending/${sector}`
+      `http://192.168.8.153:3400/api/orders/pending/${sector}`
     );
     if (response) setPendings(response);
   };
@@ -26,7 +26,7 @@ export default function Pending() {
         confirmButtonText: "Aceptar",
       });
       if (!response.isConfirmed) return;
-      const data = await putToApi(`http://localhost:3400/api/orders/take`, {
+      const data = await putToApi(`http://192.168.8.153:3400/api/orders/take`, {
         nrocompro: `${nrocompro}`,
         code_technical: `${user.code_technical}`,
       });

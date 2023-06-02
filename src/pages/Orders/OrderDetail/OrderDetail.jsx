@@ -31,7 +31,9 @@ export default function OrderDetail() {
   };
 
   const getOrder = async () => {
-    const response = await getFromApi(`http://localhost:3400/api/orders/${id}`);
+    const response = await getFromApi(
+      `http://192.168.8.153:3400/api/orders/${id}`
+    );
     if (response.status === "error") {
       Swal.fire({
         text: `${response.message}`,
@@ -67,12 +69,15 @@ export default function OrderDetail() {
         confirmButtonText: "Aceptar",
       });
       if (!response.isConfirmed) return;
-      const data = await putToApi(`http://localhost:3400/api/orders/update`, {
-        nrocompro: `${order.nrocompro}`,
-        code_technical: `${user.code_technical}`,
-        diagnostico: diagnosis,
-        costo: price,
-      });
+      const data = await putToApi(
+        `http://192.168.8.153:3400/api/orders/update`,
+        {
+          nrocompro: `${order.nrocompro}`,
+          code_technical: `${user.code_technical}`,
+          diagnostico: diagnosis,
+          costo: price,
+        }
+      );
 
       if (data.status === "error")
         return Swal.fire({
@@ -131,7 +136,7 @@ export default function OrderDetail() {
       if (notification.isConfirmed) orderToClose.notification = true;
 
       const data = await putToApi(
-        `http://localhost:3400/api/orders/close`,
+        `http://192.168.8.153:3400/api/orders/close`,
         orderToClose
       );
 
@@ -179,7 +184,7 @@ export default function OrderDetail() {
       if (!response.isConfirmed) return;
 
       const data = await putToApi(
-        `http://localhost:3400/api/orders/free`,
+        `http://192.168.8.153:3400/api/orders/free`,
         orderToFree
       );
 
@@ -221,7 +226,7 @@ export default function OrderDetail() {
         confirmButtonText: "Aceptar",
       });
       if (!response.isConfirmed) return;
-      const data = await putToApi(`http://localhost:3400/api/orders/take`, {
+      const data = await putToApi(`http://192.168.8.153:3400/api/orders/take`, {
         nrocompro: `${order.nrocompro}`,
         code_technical: `${user.code_technical}`,
       });

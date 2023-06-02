@@ -33,7 +33,7 @@ export default function Login() {
   const login = async () => {
     setIsLogin(true);
     const response = await postToApi(
-      `http://localhost:3400/api/users/login`,
+      `http://192.168.8.153:3400/api/users/login`,
       loginForm
     );
     if (response.status === "error") {

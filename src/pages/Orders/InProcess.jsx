@@ -8,7 +8,7 @@ export default function InProcess() {
 
   const getOrders = async () => {
     const response = await getFromApi(
-      `http://localhost:3400/api/orders/in-process`
+      `http://192.168.8.153:3400/api/orders/in-process`
     );
     if (response) setInProcess(response);
   };
