@@ -3,48 +3,75 @@ import { Col, Container, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { UserContext } from "../../context/userContext";
+import { postToApi } from "../../utils";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const [loginUser, setLoginUser] = useState({
+  const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState(false);
+  const [loginForm, setLoginForm] = useState({
     email: "",
     password: "",
   });
 
-  const { setUser } = useContext(UserContext);
+  const { loginUserContext } = useContext(UserContext);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setLoginUser((prevUser) => ({
+    setLoginForm((prevUser) => ({
       ...prevUser,
       [name]: value,
     }));
   };
 
-  const login = async () => {
-    const response = await fetch("http://localhost:8080/api/users/login", {
-      method: "POST",
-      body: JSON.stringify(loginUser),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const json = await response.json();
-    if (json.status === "success") {
-      const { accessToken } = json;
+  const handleKeyDown = async (event) => {
+    const keyCode = event.keyCode;
+    if (keyCode === 13) login();
+  };
 
-      if (accessToken) {
-        sessionStorage.setItem("accessToken", accessToken);
-        console.log(json.user);
-        setUser(json.user);
-        // window.location.replace("/");
-      }
+  const login = async () => {
+    setIsLogin(true);
+    const response = await postToApi(
+      `http://192.168.8.153:3400/api/users/login`,
+      loginForm
+    );
+    if (response.status === "error") {
+      setIsLogin(false);
+      return Swal.fire({
+        text: `${response.message}`,
+        icon: "error",
+      });
+    }
+    if (response.status === "success") {
+      const { user, accessToken } = response;
+
+      loginUserContext(user, accessToken);
+
+      await Swal.fire({
+        toast: true,
+        icon: "success",
+        text: "Login success",
+        position: "top-end",
+        timer: 1500,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+        didClose: () => {
+          navigate("/");
+        },
+      });
     }
   };
   return (
     <Container>
-      <Row className="justify-content-center">
+      <Row className="justify-content-center mt-3">
         <Col sm={12} md={6} lg={4}>
-          <Form>
+          <h1 className="text-center">LOGIN</h1>
+          <Form onKeyDown={handleKeyDown}>
             <Form.Group className="mb-3" controlId="email">
               <Form.Label>Email</Form.Label>
               <Form.Control
@@ -64,8 +91,8 @@ export default function Login() {
                 name="password"
               />
             </Form.Group>
-            <Button onClick={login} variant="primary">
-              Login
+            <Button onClick={login} variant="primary" disabled={isLogin}>
+              {isLogin ? "Wait..." : "Login"}
             </Button>
           </Form>
         </Col>

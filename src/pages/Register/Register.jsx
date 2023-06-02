@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { postToApi } from "../../utils";
+import Swal from "sweetalert2";
 
 export default function Register() {
-  const [user, setUser] = useState({
+  const [newUser, setNewUser] = useState({
     first_name: "",
     last_name: "",
     email: "",
@@ -14,31 +16,52 @@ export default function Register() {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setUser((prevUser) => ({
+    setNewUser((prevUser) => ({
       ...prevUser,
       [name]: value,
     }));
   };
 
   const register = async () => {
-    console.log(user);
-    const response = await fetch("http://localhost:8080/api/users/register", {
-      method: "POST",
-      body: JSON.stringify(user),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const json = await response.json();
-    if (json.status === "success") {
-      window.location.replace("/login");
+    const response = await postToApi(
+      `http://192.168.8.153:3400/api/users/register`,
+      newUser
+    );
+    if (response.status === "error")
+      return Swal.fire({
+        text: `${response.message}`,
+        icon: "error",
+      });
+    if (response.status === "success") {
+      const form = document.querySelector("#formRegister");
+      form.reset();
+      setNewUser({
+        first_name: "",
+        last_name: "",
+        email: "",
+        code_technical: "",
+        password: "",
+      });
+      await Swal.fire({
+        toast: true,
+        icon: "success",
+        text: "Register success",
+        position: "top-end",
+        timer: 3000,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
     }
   };
   return (
     <Container>
       <Row className="justify-content-center">
         <Col sm={12} md={6} lg={4}>
-          <Form>
+          <Form id="formRegister">
             <Form.Group className="mb-3" controlId="first_name">
               <Form.Label>Nombre</Form.Label>
               <Form.Control

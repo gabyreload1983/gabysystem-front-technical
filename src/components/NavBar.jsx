@@ -1,9 +1,19 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { UserContext } from "../context/userContext";
+import { useContext } from "react";
 
 function NavBar() {
+  const { user, logoutUserContext } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const logout = async () => {
+    await logoutUserContext();
+    navigate("/login");
+  };
+
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
@@ -13,27 +23,37 @@ function NavBar() {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link as={NavLink} to="/profile">
-                Perfil
-              </Nav.Link>
-              <Nav.Link as={NavLink} to="/register">
-                Register
-              </Nav.Link>
-              <Nav.Link as={NavLink} to="/customers">
-                Clientes
-              </Nav.Link>
-              <Nav.Link as={NavLink} to="/products">
-                Productos
-              </Nav.Link>
-              <Nav.Link as={NavLink} to="/orders">
-                Ordenes de trabajo
-              </Nav.Link>
-            </Nav>
+            {user && (
+              <Nav className="me-auto">
+                <Nav.Link as={NavLink} to="/profile">
+                  Perfil
+                </Nav.Link>
+                {user.role === "admin" && (
+                  <Nav.Link as={NavLink} to="/register">
+                    Register
+                  </Nav.Link>
+                )}
+                <Nav.Link as={NavLink} to="/customers">
+                  Clientes
+                </Nav.Link>
+                <Nav.Link as={NavLink} to="/products">
+                  Productos
+                </Nav.Link>
+                <Nav.Link as={NavLink} to="/orders">
+                  Ordenes de trabajo
+                </Nav.Link>
+              </Nav>
+            )}
             <Nav className="ms-auto">
-              <Nav.Link as={NavLink} to="/login">
-                Login
-              </Nav.Link>
+              {user ? (
+                <Nav.Link as={NavLink} onClick={logout}>
+                  Logout
+                </Nav.Link>
+              ) : (
+                <Nav.Link as={NavLink} to="/login">
+                  Login
+                </Nav.Link>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

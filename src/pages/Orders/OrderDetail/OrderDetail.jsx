@@ -13,7 +13,7 @@ import ProductsInOrder from "./ProductsInOrder";
 import { UserContext } from "../../../context/userContext";
 import { useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
-import { getFromApi, putFromApi } from "../../../utils";
+import { getFromApi, putToApi } from "../../../utils";
 import Swal from "sweetalert2";
 
 export default function OrderDetail() {
@@ -32,13 +32,21 @@ export default function OrderDetail() {
 
   const getOrder = async () => {
     const response = await getFromApi(
-      `${import.meta.env.VITE_PREFIX_API}/orders/${id}`
+      `http://192.168.8.153:3400/api/orders/${id}`
     );
-    if (response) {
-      setOrder(response);
-      setDiagnosis(response.diagnostico);
-      setPrice(Number(response.costo));
-      setTotal(Number(response.total));
+    if (response.status === "error") {
+      Swal.fire({
+        text: `${response.message}`,
+        icon: "error",
+      });
+    }
+
+    if (response.status === "success") {
+      const { order } = response;
+      setOrder(order);
+      setDiagnosis(order.diagnostico);
+      setPrice(Number(order.costo));
+      setTotal(Number(order.total));
     }
   };
 
@@ -61,8 +69,8 @@ export default function OrderDetail() {
         confirmButtonText: "Aceptar",
       });
       if (!response.isConfirmed) return;
-      const data = await putFromApi(
-        `${import.meta.env.VITE_PREFIX_API}/orders/update`,
+      const data = await putToApi(
+        `http://192.168.8.153:3400/api/orders/update`,
         {
           nrocompro: `${order.nrocompro}`,
           code_technical: `${user.code_technical}`,
@@ -73,7 +81,7 @@ export default function OrderDetail() {
 
       if (data.status === "error")
         return Swal.fire({
-          text: `${json.message}`,
+          text: `${data.message}`,
           icon: "error",
         });
       if (data.status === "success") {
@@ -120,18 +128,21 @@ export default function OrderDetail() {
       const notification = await Swal.fire({
         text: `Enviar notificacion por email?`,
         showCancelButton: true,
-        confirmButtonText: "Aceptar",
+        cancelButtonText: "Cerrar Sin Notificacion",
+        confirmButtonText: "Cerrar y Enviar Email",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
       });
       if (notification.isConfirmed) orderToClose.notification = true;
 
-      const data = await putFromApi(
-        `${import.meta.env.VITE_PREFIX_API}/orders/close`,
+      const data = await putToApi(
+        `http://192.168.8.153:3400/api/orders/close`,
         orderToClose
       );
 
       if (data.status === "error")
         return Swal.fire({
-          text: `${json.message}`,
+          text: `${data.message}`,
           icon: "error",
         });
       if (data.status === "success") {
@@ -172,14 +183,14 @@ export default function OrderDetail() {
       });
       if (!response.isConfirmed) return;
 
-      const data = await putFromApi(
-        `${import.meta.env.VITE_PREFIX_API}/orders/free`,
+      const data = await putToApi(
+        `http://192.168.8.153:3400/api/orders/free`,
         orderToFree
       );
 
       if (data.status === "error")
         return Swal.fire({
-          text: `${json.message}`,
+          text: `${data.message}`,
           icon: "error",
         });
       if (data.status === "success") {
@@ -215,13 +226,10 @@ export default function OrderDetail() {
         confirmButtonText: "Aceptar",
       });
       if (!response.isConfirmed) return;
-      const data = await putFromApi(
-        `${import.meta.env.VITE_PREFIX_API}/orders/take`,
-        {
-          nrocompro: `${order.nrocompro}`,
-          code_technical: `${user.code_technical}`,
-        }
-      );
+      const data = await putToApi(`http://192.168.8.153:3400/api/orders/take`, {
+        nrocompro: `${order.nrocompro}`,
+        code_technical: `${user.code_technical}`,
+      });
       if (data.status === "error")
         return Swal.fire({
           text: `${data.message}`,
@@ -342,6 +350,7 @@ export default function OrderDetail() {
                           aria-label="With textarea"
                           value={diagnosis}
                           onChange={handleDiagnosis}
+                          rows="5"
                         />
                       </InputGroup>
                     </td>
