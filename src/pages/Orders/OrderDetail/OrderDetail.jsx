@@ -15,6 +15,14 @@ import { useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import { getFromApi, putToApi } from "../../../utils";
 import Swal from "sweetalert2";
+import {
+  getOrderDiagnosis,
+  getOrderState,
+  getOrderTier,
+  getOrderTierBackground,
+  getOrderUbication,
+} from "../orderUtils";
+import moment from "moment/moment";
 
 export default function OrderDetail() {
   const { user } = useContext(UserContext);
@@ -280,23 +288,27 @@ export default function OrderDetail() {
                 <tbody>
                   <tr>
                     <td>ESTADO</td>
-                    <td>{order.estado}</td>
+                    <td>{getOrderState(order.estado)}</td>
                   </tr>
                   <tr>
                     <td>DIAGNOSTICO</td>
-                    <td>{order.diag}</td>
+                    <td>{getOrderDiagnosis(order.diag)}</td>
                   </tr>
                   <tr>
                     <td>UBICACION</td>
-                    <td>{order.ubicacion}</td>
+                    <td>{getOrderUbication(order.ubicacion)}</td>
                   </tr>
                   <tr>
                     <td>FECHA INGRESO</td>
-                    <td>{order.ingresado}</td>
+                    <td>
+                      {moment(order.ingresado).format("DD/MM/YYYY hh:mm a")}
+                    </td>
                   </tr>
                   <tr>
                     <td>PRIORIDAD</td>
-                    <td>{order.prioridad}</td>
+                    <td className={getOrderTierBackground(order.prioridad)}>
+                      {getOrderTier(order.prioridad)}
+                    </td>
                   </tr>
                 </tbody>
               </Table>
