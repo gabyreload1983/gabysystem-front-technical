@@ -43,5 +43,4 @@ export const getOrderTierBackground = (tier) => {
   if (tier === 10) return "";
 };
 
-export const getBackgroundTurno = (falla) =>
-  falla.toLowerCase().includes("turno") ? "bg-dark" : "";
+export const isTurno = (falla) => falla.toLowerCase().includes("turno");
