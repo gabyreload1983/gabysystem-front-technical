@@ -19,7 +19,9 @@ export default function InProcess() {
 
   return (
     <Container>
-      <h1>InProcess</h1>
+      <h3 className="text-center mt-3">
+        <span className="badge bg-info">TOTAL {inProcess.length}</span>
+      </h3>
       {inProcess && <OrderList orders={inProcess} />}
     </Container>
   );
