@@ -1,11 +1,7 @@
 import React from "react";
 import { Button, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import {
-  getBackgroundTurno,
-  getOrderTier,
-  getOrderTierBackground,
-} from "./orderUtils";
+import { isTurno, getOrderTier, getOrderTierBackground } from "./orderUtils";
 import moment from "moment";
 
 export default function OrderList({ orders, onTakeOrder }) {
@@ -35,12 +31,15 @@ export default function OrderList({ orders, onTakeOrder }) {
                   <td>
                     {moment(order.ingresado).format("DD/MM/YYYY hh:mm a")}
                   </td>
-                  <td className={getBackgroundTurno(order.falla)}>
+                  <td>
                     <Link
                       to={`/orders/${order.nrocompro}`}
                       className="link-order"
                     >
                       {order.nrocompro}
+                      {isTurno(order.falla) && (
+                        <span className="badge bg-dark ms-2">TURNO</span>
+                      )}
                     </Link>
                   </td>
                   <td>{order.nombre} - </td>
