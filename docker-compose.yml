@@ -1,7 +1,6 @@
 version: "3.9"
 services:
   gabysystem-technical:
-    build: .
     image: gabyreload1983/gabysystem-technical:v4.3.0
     container_name: gabysystem-technical-v4.3.0
     ports:
