@@ -66,7 +66,10 @@ export default function Pending() {
 
   return (
     <Container>
-      <h1>Pendings {sector}</h1>
+      <h3 className="text-center mt-3">
+        <span className="badge bg-warning">TOTAL {pendings.length}</span>
+      </h3>
+
       {pendings && <OrderList orders={pendings} onTakeOrder={takeOrder} />}
     </Container>
   );

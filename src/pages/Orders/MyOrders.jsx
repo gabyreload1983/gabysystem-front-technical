@@ -21,7 +21,9 @@ export default function MyOrders() {
 
   return (
     <Container>
-      <h1>MyOrders</h1>
+      <h3 className="text-center mt-3">
+        <span className="badge bg-success">TOTAL {myOrders.length}</span>
+      </h3>
       {myOrders && <OrderList orders={myOrders} />}
     </Container>
   );
