@@ -13,6 +13,7 @@ import Layout from "./components/Layout";
 import UserContextProvider from "./context/userContext";
 import OrderDetail from "./pages/Orders/OrderDetail/OrderDetail";
 import PageNotFount from "./components/PageNotFount";
+import Users from "./pages/Users/Users";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+            <Route path="users" element={<Users />} />
             <Route path="customers" element={<Customers />} />
             <Route path="products" element={<Products />} />
             <Route path="/profile" element={<Profile />} />
