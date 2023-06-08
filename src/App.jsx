@@ -7,13 +7,14 @@ import Products from "./pages/Products/Products";
 import Profile from "./pages/Profile/Profile";
 import MyOrders from "./pages/Orders/MyOrders";
 import Pending from "./pages/Orders/Pending";
-import InProcess from "./pages/Orders/inProcess";
+import InProcess from "./pages/Orders/InProcess";
 import OrdersLayout from "./components/OrdersLayout";
 import Layout from "./components/Layout";
 import UserContextProvider from "./context/userContext";
 import OrderDetail from "./pages/Orders/OrderDetail/OrderDetail";
 import PageNotFount from "./components/PageNotFount";
 import Users from "./pages/Users/Users";
+import UserDetail from "./pages/Users/UserDetail";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="users" element={<Users />} />
+            <Route path="users/:id" element={<UserDetail />} />
             <Route path="customers" element={<Customers />} />
             <Route path="products" element={<Products />} />
             <Route path="/profile" element={<Profile />} />

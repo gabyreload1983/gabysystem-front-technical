@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { getFromApi } from "../../utils";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Users() {
   const [users, setusers] = useState([]);
+  const navigate = useNavigate();
 
   const getUsers = async () => {
     const response = await getFromApi(`http://192.168.8.153:3400/api/users`);
-    if (response) setusers(response);
+    if (response.status === "success") setusers(response.users);
   };
 
   useEffect(() => {
     getUsers();
   }, []);
+
+  const editUser = async (id) => {
+    navigate(`/users/${id}`);
+  };
+
   return (
     <Container>
       <Row>
@@ -24,6 +30,7 @@ export default function Users() {
               <tr>
                 <th scope="col">Nombre</th>
                 <th scope="col">Email</th>
+                <th scope="col">Codigo Urbano</th>
                 <th scope="col">Role</th>
                 <th scope="col">Edit</th>
               </tr>
@@ -37,9 +44,13 @@ export default function Users() {
                         {user.first_name} {user.last_name}
                       </th>
                       <th>{user.email}</th>
+                      <th>{user.code_technical}</th>
                       <th>{user.role}</th>
                       <th>
-                        <button className="btn btn-sm btn-outline-success">
+                        <button
+                          className="btn btn-sm btn-outline-success"
+                          onClick={() => editUser(user._id)}
+                        >
                           edit
                         </button>
                       </th>

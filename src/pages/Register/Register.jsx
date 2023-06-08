@@ -12,6 +12,7 @@ export default function Register() {
     email: "",
     code_technical: "",
     password: "",
+    role: "",
   });
 
   const handleChange = (event) => {
@@ -69,6 +70,7 @@ export default function Register() {
                 type="text"
                 placeholder="Nombre"
                 name="first_name"
+                required
               />
             </Form.Group>
 
@@ -79,6 +81,7 @@ export default function Register() {
                 type="text"
                 placeholder="Apellido"
                 name="last_name"
+                required
               />
             </Form.Group>
 
@@ -89,6 +92,7 @@ export default function Register() {
                 type="text"
                 placeholder="Email"
                 name="email"
+                required
               />
             </Form.Group>
 
@@ -99,6 +103,7 @@ export default function Register() {
                 type="text"
                 placeholder="Usuario Urbano"
                 name="code_technical"
+                required
               />
             </Form.Group>
 
@@ -109,7 +114,22 @@ export default function Register() {
                 type="password"
                 placeholder="Password"
                 name="password"
+                required
               />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <select
+                name="role"
+                className="form-select"
+                onChange={handleChange}
+                required
+              >
+                <option value="">Role</option>
+                <option value="technical">Tecnico</option>
+                <option value="saler">Vendedor</option>
+                <option value="premium">Premium</option>
+              </select>
             </Form.Group>
             <Button onClick={register} variant="primary">
               Register
