@@ -25,7 +25,7 @@ export default function Register() {
 
   const register = async () => {
     const response = await postToApi(
-      `http://192.168.8.153:3400/api/users/register`,
+      `http://${import.meta.env.VITE_URL_HOST}:3400/api/users/register`,
       newUser
     );
     if (response.status === "error")

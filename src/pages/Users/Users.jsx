@@ -8,7 +8,9 @@ export default function Users() {
   const navigate = useNavigate();
 
   const getUsers = async () => {
-    const response = await getFromApi(`http://192.168.8.153:3400/api/users`);
+    const response = await getFromApi(
+      `http://${import.meta.env.VITE_URL_HOST}:3400/api/users`
+    );
     if (response.status === "success") setusers(response.users);
   };
 

@@ -12,7 +12,7 @@ export default function UserDetail() {
 
   const getUser = async () => {
     const response = await getFromApi(
-      `http://192.168.8.153:3400/api/users/${id}`
+      `http://${import.meta.env.VITE_URL_HOST}:3400/api/users/${id}`
     );
     if (response.status === "success") setUpdateUser(response.user);
   };
@@ -30,7 +30,7 @@ export default function UserDetail() {
 
   const update = async () => {
     const response = await putToApi(
-      `http://192.168.8.153:3400/api/users/${id}`,
+      `http://${import.meta.env.VITE_URL_HOST}:3400/api/users/${id}`,
       updateUser
     );
     if (response.status === "error")

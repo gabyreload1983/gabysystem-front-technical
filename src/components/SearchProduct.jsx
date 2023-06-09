@@ -7,7 +7,9 @@ export default function SearchProduct({ onChangeProducts }) {
 
   const searchProduct = async () => {
     const response = await getFromApi(
-      `http://192.168.8.153:3400/api/products/search-by?${searchBy}=${input}`
+      `http://${
+        import.meta.env.VITE_URL_HOST
+      }:3400/api/products/search-by?${searchBy}=${input}`
     );
     console.log(response);
     onChangeProducts(response.payload);
