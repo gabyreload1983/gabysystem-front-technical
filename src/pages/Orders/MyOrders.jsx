@@ -10,7 +10,9 @@ export default function MyOrders() {
 
   const getOrders = async () => {
     const response = await getFromApi(
-      `http://192.168.8.153:3400/api/orders/technical/${codeTechnical}`
+      `http://${
+        import.meta.env.VITE_URL_HOST
+      }:3400/api/orders/technical/${codeTechnical}`
     );
     if (response) setMyOrders(response);
   };

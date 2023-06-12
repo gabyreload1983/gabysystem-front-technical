@@ -29,9 +29,14 @@ function NavBar() {
                   Perfil
                 </Nav.Link>
                 {user.role === "admin" && (
-                  <Nav.Link as={NavLink} to="/register">
-                    Register
-                  </Nav.Link>
+                  <>
+                    <Nav.Link as={NavLink} to="/register">
+                      Register
+                    </Nav.Link>
+                    <Nav.Link as={NavLink} to="/users">
+                      Users
+                    </Nav.Link>
+                  </>
                 )}
                 <Nav.Link as={NavLink} to="/customers">
                   Clientes
