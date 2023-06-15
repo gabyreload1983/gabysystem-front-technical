@@ -50,7 +50,7 @@ export default function OrderDetail() {
     }
 
     if (response.status === "success") {
-      const { order } = response;
+      const order = response.payload;
       setOrder(order);
       setDiagnosis(order.diagnostico);
       setPrice(Number(order.costo));

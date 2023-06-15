@@ -14,7 +14,7 @@ export default function MyOrders() {
         import.meta.env.VITE_URL_HOST
       }:3400/api/orders/technical/${codeTechnical}`
     );
-    if (response) setMyOrders(response);
+    if (response.status === "success") setMyOrders(response.payload);
   };
 
   useEffect(() => {

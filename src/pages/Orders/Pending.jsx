@@ -17,7 +17,7 @@ export default function Pending() {
         import.meta.env.VITE_URL_HOST
       }:3400/api/orders/pending/${sector}`
     );
-    if (response) setPendings(response);
+    if (response.status === "success") setPendings(response.payload);
   };
 
   const takeOrder = async (nrocompro) => {
