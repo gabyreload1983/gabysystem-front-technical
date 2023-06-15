@@ -26,21 +26,21 @@ export const getOrderTier = (tier) => {
   if (tier === 7) return "GARANTIA COMPRA";
   if (tier === 8) return "BOXES";
   if (tier === 9) return "ABONADOS";
-  if (tier === 10) return "";
+  if (tier === 10) return "URGENCIA";
 };
 
 export const getOrderTierBackground = (tier) => {
   if (tier === 0) return "";
-  if (tier === 1) return "";
-  if (tier === 2) return "";
-  if (tier === 3) return "table-secondary";
-  if (tier === 4) return "table-primary";
-  if (tier === 5) return "table-success";
-  if (tier === 6) return "";
-  if (tier === 7) return "table-info";
-  if (tier === 8) return "table-warning";
-  if (tier === 9) return "table-danger";
-  if (tier === 10) return "";
+  if (tier === 1) return "tier1";
+  if (tier === 2) return "tier2";
+  if (tier === 3) return "tier3";
+  if (tier === 4) return "tier4";
+  if (tier === 5) return "tier5";
+  if (tier === 6) return "tier6";
+  if (tier === 7) return "tier7";
+  if (tier === 8) return "tier8";
+  if (tier === 9) return "tier9";
+  if (tier === 10) return "tier10";
 };
 
 export const isTurno = (falla) => falla.toLowerCase().includes("turno");

@@ -21,3 +21,51 @@ footer {
 .link-order {
   text-decoration: none;
 }
+.table {
+  --bs-table-bg: unset;
+}
+
+td > a {
+  text-decoration: none;
+  color: #161616;
+}
+/* tier */
+.tier10 {
+  background: #ff0000;
+}
+
+.tier9 {
+  background: #fd7e14;
+}
+
+.tier8 {
+  background: #f02727;
+}
+
+.tier7 {
+  background: #a83e73;
+}
+
+.tier6 {
+  background: #1fe66b;
+}
+
+.tier5 {
+  background: #ffc107;
+}
+
+.tier4 {
+  background: #54c0db;
+}
+
+.tier3 {
+  background: #d3e910;
+}
+
+.tier2 {
+  background: #e4f58d;
+}
+
+.tier1 {
+  background: #727950;
+}
