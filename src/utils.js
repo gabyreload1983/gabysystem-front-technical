@@ -36,5 +36,7 @@ export const postToApi = async (path, body) => {
 export const formatPrice = (price) => {
   let p = price.toLocaleString("en-US");
   let index = p.indexOf(".");
-  return p.slice(0, index).replace(",", ".");
+  return index === -1
+    ? p.replaceAll(",", ".")
+    : p.slice(0, index).replaceAll(",", ".");
 };

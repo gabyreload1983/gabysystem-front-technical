@@ -63,6 +63,9 @@ export default function OrderDetail() {
   };
 
   const handlePrice = (e) => {
+    const lastCharacter = Number(e.target.value[e.target.value.length - 1]);
+    if (isNaN(lastCharacter)) return;
+
     setTotal((prevTotal) => {
       return prevTotal - price + Number(e.target.value);
     });
