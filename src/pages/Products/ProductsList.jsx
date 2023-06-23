@@ -1,8 +1,8 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { formatPrice, getFinalPrice } from "../../utils";
+import ProductDetail from "./ProductDetail";
 
-export default function ProductsList({ data }) {
+export default function ProductsList({ products }) {
   return (
     <Container>
       <Row>
@@ -18,18 +18,10 @@ export default function ProductsList({ data }) {
               </tr>
             </thead>
             <tbody>
-              {data.products.length > 0 &&
-                data.products.map((p) => (
-                  <tr key={p.codigo}>
-                    <td>{p.codigo}</td>
-                    <td>{p.descrip}</td>
-                    <td>{p.stockd01 - p.reserd01}</td>
-                    <td>
-                      $
-                      {formatPrice(
-                        getFinalPrice(p.lista1, p.grabado, data.dollar)
-                      )}
-                    </td>
+              {products.length > 0 &&
+                products.map((product) => (
+                  <tr key={product.codigo}>
+                    <ProductDetail product={product} />
                   </tr>
                 ))}
             </tbody>
