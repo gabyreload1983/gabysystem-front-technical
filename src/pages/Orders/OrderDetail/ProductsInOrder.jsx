@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, InputGroup, Table } from "react-bootstrap";
+import { formatPrice } from "../../../utils";
 
 export default function ProductsInOrder({
   order,
@@ -43,7 +44,9 @@ export default function ProductsInOrder({
               <td className="custom-td text-end">
                 <InputGroup>
                   <InputGroup.Text>$</InputGroup.Text>
-                  <InputGroup.Text>${p.priceWithTax}</InputGroup.Text>
+                  <InputGroup.Text>
+                    {formatPrice(p.priceList1WithTax)}
+                  </InputGroup.Text>
                 </InputGroup>
               </td>
             </tr>
@@ -56,7 +59,7 @@ export default function ProductsInOrder({
           <td className="custom-td text-end">
             <InputGroup>
               <InputGroup.Text>$</InputGroup.Text>
-              <InputGroup.Text>{total.toFixed(2)}</InputGroup.Text>
+              <InputGroup.Text>{formatPrice(total)}</InputGroup.Text>
             </InputGroup>
           </td>
         </tr>
