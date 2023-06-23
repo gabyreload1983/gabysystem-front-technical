@@ -9,7 +9,7 @@ export default function SearchProduct({ onChangeProducts }) {
     const response = await getFromApi(
       `http://${
         import.meta.env.VITE_URL_HOST
-      }:3400/api/products/search-by?${searchBy}=${input}`
+      }/api/products/search-by?${searchBy}=${input}`
     );
     console.log(response);
     onChangeProducts(response.payload);

@@ -13,9 +13,7 @@ export default function Pending() {
 
   const getOrders = async () => {
     const response = await getFromApi(
-      `http://${
-        import.meta.env.VITE_URL_HOST
-      }:3400/api/orders/pending/${sector}`
+      `http://${import.meta.env.VITE_URL_HOST}/api/orders/pending/${sector}`
     );
     if (response.status === "success") setPendings(response.payload);
   };
@@ -29,7 +27,7 @@ export default function Pending() {
       });
       if (!response.isConfirmed) return;
       const data = await putToApi(
-        `http://${import.meta.env.VITE_URL_HOST}:3400/api/orders/take`,
+        `http://${import.meta.env.VITE_URL_HOST}/api/orders/take`,
         {
           nrocompro: `${nrocompro}`,
           code_technical: `${user.code_technical}`,

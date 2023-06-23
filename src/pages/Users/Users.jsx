@@ -9,7 +9,7 @@ export default function Users() {
 
   const getUsers = async () => {
     const response = await getFromApi(
-      `http://${import.meta.env.VITE_URL_HOST}:3400/api/users`
+      `http://${import.meta.env.VITE_URL_HOST}/api/users`
     );
     if (response.status === "success") setusers(response.users);
   };

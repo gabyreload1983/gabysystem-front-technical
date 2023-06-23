@@ -8,7 +8,7 @@ export default function InProcess() {
 
   const getOrders = async () => {
     const response = await getFromApi(
-      `http://${import.meta.env.VITE_URL_HOST}:3400/api/orders/in-process`
+      `http://${import.meta.env.VITE_URL_HOST}/api/orders/in-process`
     );
     if (response.status === "success") setInProcess(response.payload);
   };
