@@ -33,7 +33,7 @@ export default function Login() {
   const login = async () => {
     setIsLogin(true);
     const response = await postToApi(
-      `http://${import.meta.env.VITE_URL_HOST}:3400/api/users/login`,
+      `http://${import.meta.env.VITE_URL_HOST}/api/users/login`,
       loginForm
     );
     if (response.status === "error") {

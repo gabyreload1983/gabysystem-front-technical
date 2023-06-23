@@ -12,7 +12,7 @@ export default function MyOrders() {
     const response = await getFromApi(
       `http://${
         import.meta.env.VITE_URL_HOST
-      }:3400/api/orders/technical/${codeTechnical}`
+      }/api/orders/technical/${codeTechnical}`
     );
     if (response.status === "success") setMyOrders(response.payload);
   };

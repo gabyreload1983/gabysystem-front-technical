@@ -40,7 +40,7 @@ export default function OrderDetail() {
 
   const getOrder = async () => {
     const response = await getFromApi(
-      `http://${import.meta.env.VITE_URL_HOST}:3400/api/orders/${id}`
+      `http://${import.meta.env.VITE_URL_HOST}/api/orders/${id}`
     );
     if (response.status === "error") {
       Swal.fire({
@@ -63,6 +63,9 @@ export default function OrderDetail() {
   };
 
   const handlePrice = (e) => {
+    const lastCharacter = Number(e.target.value[e.target.value.length - 1]);
+    if (isNaN(lastCharacter)) return;
+
     setTotal((prevTotal) => {
       return prevTotal - price + Number(e.target.value);
     });
@@ -78,7 +81,7 @@ export default function OrderDetail() {
       });
       if (!response.isConfirmed) return;
       const data = await putToApi(
-        `http://${import.meta.env.VITE_URL_HOST}:3400/api/orders/update`,
+        `http://${import.meta.env.VITE_URL_HOST}/api/orders/update`,
         {
           nrocompro: `${order.nrocompro}`,
           code_technical: `${user.code_technical}`,
@@ -144,7 +147,7 @@ export default function OrderDetail() {
       if (notification.isConfirmed) orderToClose.notification = true;
 
       const data = await putToApi(
-        `http://${import.meta.env.VITE_URL_HOST}:3400/api/orders/close`,
+        `http://${import.meta.env.VITE_URL_HOST}/api/orders/close`,
         orderToClose
       );
 
@@ -192,7 +195,7 @@ export default function OrderDetail() {
       if (!response.isConfirmed) return;
 
       const data = await putToApi(
-        `http://${import.meta.env.VITE_URL_HOST}:3400/api/orders/free`,
+        `http://${import.meta.env.VITE_URL_HOST}/api/orders/free`,
         orderToFree
       );
 
@@ -235,7 +238,7 @@ export default function OrderDetail() {
       });
       if (!response.isConfirmed) return;
       const data = await putToApi(
-        `http://${import.meta.env.VITE_URL_HOST}:3400/api/orders/take`,
+        `http://${import.meta.env.VITE_URL_HOST}/api/orders/take`,
         {
           nrocompro: `${order.nrocompro}`,
           code_technical: `${user.code_technical}`,
