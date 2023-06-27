@@ -25,9 +25,6 @@ function NavBar() {
           <Navbar.Collapse id="basic-navbar-nav">
             {user && (
               <Nav className="me-auto">
-                <Nav.Link as={NavLink} to="/profile">
-                  Perfil
-                </Nav.Link>
                 {user.role === "admin" && (
                   <>
                     <Nav.Link as={NavLink} to="/register">
@@ -51,9 +48,14 @@ function NavBar() {
             )}
             <Nav className="ms-auto">
               {user ? (
-                <Nav.Link as={NavLink} onClick={logout}>
-                  Logout
-                </Nav.Link>
+                <>
+                  <Nav.Link as={NavLink} to="/profile">
+                    {user.first_name} {user.last_name}
+                  </Nav.Link>
+                  <Nav.Link as={NavLink} onClick={logout}>
+                    Logout
+                  </Nav.Link>
+                </>
               ) : (
                 <Nav.Link as={NavLink} to="/login">
                   Login

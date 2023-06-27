@@ -6,6 +6,9 @@ export const getFromApi = async (path) => {
       Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
     },
   });
+  if (response.status === 403)
+    return { status: "error", message: "Expired JWT" };
+
   return await response.json();
 };
 

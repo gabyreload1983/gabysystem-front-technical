@@ -25,7 +25,7 @@ import {
 import moment from "moment/moment";
 
 export default function OrderDetail() {
-  const { user } = useContext(UserContext);
+  const { user, logoutUserContext } = useContext(UserContext);
   const { id } = useParams();
   const [order, setOrder] = useState(null);
   const [diagnosis, setDiagnosis] = useState(null);
@@ -43,10 +43,14 @@ export default function OrderDetail() {
       `http://${import.meta.env.VITE_URL_HOST}/api/orders/${id}`
     );
     if (response.status === "error") {
-      Swal.fire({
+      await Swal.fire({
         text: `${response.message}`,
         icon: "error",
       });
+      if (response.message === "Expired JWT") {
+        logoutUserContext();
+        return navigate("/login");
+      }
     }
 
     if (response.status === "success") {

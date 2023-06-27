@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import OrderList from "./OrderList";
 import { getFromApi, putToApi } from "../../utils";
 import Swal from "sweetalert2";
@@ -9,13 +9,18 @@ import { UserContext } from "../../context/userContext";
 export default function Pending() {
   const { sector } = useParams();
   const [pendings, setPendings] = useState([]);
-  const { user } = useContext(UserContext);
+  const { user, logoutUserContext } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const getOrders = async () => {
     const response = await getFromApi(
       `http://${import.meta.env.VITE_URL_HOST}/api/orders/pending/${sector}`
     );
-    if (response.status === "success") setPendings(response.payload);
+    if (response.status === "success") return setPendings(response.payload);
+    if (response.status === "error") {
+      logoutUserContext();
+      return navigate("/login");
+    }
   };
 
   const takeOrder = async (nrocompro) => {
