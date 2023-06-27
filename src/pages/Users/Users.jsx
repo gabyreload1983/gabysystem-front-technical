@@ -1,17 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { getFromApi } from "../../utils";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/userContext";
 
 export default function Users() {
   const [users, setusers] = useState([]);
   const navigate = useNavigate();
+  const { logoutUserContext } = useContext(UserContext);
 
   const getUsers = async () => {
     const response = await getFromApi(
       `http://${import.meta.env.VITE_URL_HOST}/api/users`
     );
     if (response.status === "success") setusers(response.users);
+    if (response.status === "error") {
+      logoutUserContext();
+      return navigate("/login");
+    }
   };
 
   useEffect(() => {

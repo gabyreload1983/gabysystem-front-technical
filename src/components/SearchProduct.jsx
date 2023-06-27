@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { getFromApi } from "./../utils";
 import Swal from "sweetalert2";
+import { UserContext } from "../context/userContext";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchProduct({ onChangeProducts }) {
   const [input, setInput] = useState(null);
   const [searchBy, setSearchBy] = useState("description");
+  const navigate = useNavigate();
+  const { logoutUserContext } = useContext(UserContext);
 
   const searchProduct = async () => {
     if (!input)
@@ -23,7 +27,12 @@ export default function SearchProduct({ onChangeProducts }) {
         import.meta.env.VITE_URL_HOST
       }/api/products/search-by?${searchBy}=${input}`
     );
-    onChangeProducts(response.products);
+    if (response.status === "success")
+      return onChangeProducts(response.products);
+    if (response.status === "error") {
+      logoutUserContext();
+      return navigate("/login");
+    }
   };
 
   const handleSearchChange = (event) => {
